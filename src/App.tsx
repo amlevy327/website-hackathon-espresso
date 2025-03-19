@@ -7,6 +7,7 @@ import Step1 from './components/Step1';
 import Step2 from './components/Step2';
 import Step3 from './components/Step3';
 import Step4 from './components/Step4';
+import Step5 from './components/Step5';
 
 function App() {
   const account = useAccount();
@@ -171,6 +172,7 @@ function App() {
             <Step2 mode={mode} isCompleted={currentProgress[1]} onComplete={() => completeStep(1)} />
             <Step3 mode={mode} isCompleted={currentProgress[2]} onComplete={() => completeStep(2)} />
             <Step4 mode={mode} isCompleted={currentProgress[3]} onComplete={() => completeStep(3)} />
+            <Step5 mode={mode} isCompleted={currentProgress[4]} onComplete={() => completeStep(4)} />
           </Box>
         </Box>
       </Box>
