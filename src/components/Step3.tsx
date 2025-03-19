@@ -1,9 +1,8 @@
 // src/components/Step3.tsx
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
-import { useAccount, useBalance, useWriteContract, useWaitForTransactionReceipt } from 'wagmi';
+import { useAccount, useBalance } from 'wagmi';
 import StepPopup from './StepPopup';
-import { parseEther } from 'viem';
 
 interface StepProps {
   mode: 'game' | 'educational';
@@ -14,7 +13,6 @@ interface StepProps {
 const Step3 = ({ mode, isCompleted, onComplete }: StepProps) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [chainAdded, setChainAdded] = useState(false);
-  const [countdown, setCountdown] = useState<number | null>(null); // Countdown in seconds
 
   const { address } = useAccount();
   const { data: arbSepoliaBalance, isLoading: balanceLoading } = useBalance({
@@ -22,74 +20,60 @@ const Step3 = ({ mode, isCompleted, onComplete }: StepProps) => {
     chainId: 421614, // Arbitrum Sepolia
   });
 
-  const title = mode === 'game' ? 'Step 3: Travel to Planet 327' : 'Step 3: Bridge ETH and switch to Arbitrum Nitro Sepolia Rollup 327327327';
+  const title = mode === 'game' ? 'Step 3: Travel to Planet 327' : 'Step 3: Get Arbitrum Sepolia ETH';
   const text =
     mode === 'game'
       ? 'Head to Planet 327 to access the Warp Tunnel.'
-      : 'Bridge ETH to Arbitrum Nitro Rollup 327327327 and switch to Arbitrum Nitro Rollup 327327327 network.';
+      : 'You need gas.';
   
-  const popupTitle = mode === 'game' ? 'Travel to Planet 327' : 'Bridge ETH';
+  const popupTitle = mode === 'game' ? 'Travel to Planet 327' : 'Check Balance';
   const popupText =
     mode === 'game'
       ? 'Planet 327 has access to the Warp Tunnel and will allow you to communicate with Planet Base without traveling there. Safe travels!'
       : chainAdded
       ? 'Rollup 327 has been added to MetaMask!'
-      : 'Bridge ETH by sending ETH to the inbox smart contract on Arbitrum Sepolia. This may take up to 15 minutes!';
-  const popupButtonText = mode === 'game' ? 'Travel' : chainAdded ? 'Done' : 'Bridge ETH';
+      : 'Verify you have sufficient balance on Arbitrum Sepolia (minimum 0.00001 ETH).';
 
-  // Wagmi hooks for transaction
-  const { writeContract, data: hash, error, isPending } = useWriteContract();
-  const { isLoading: isConfirming, isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  });
+  const popupButtonText = mode === 'game' ? 'Travel' : chainAdded ? 'Done' : 'Check Balance';
 
-  // Check current network
   const checkNetwork = async () => {
     if (!window.ethereum) return null;
     const chainId = await window.ethereum.request({ method: 'eth_chainId' });
     return parseInt(chainId, 16);
   };
 
-  const handleBridgeEth = async () => {
+  const handleCheckBalance = async () => {
     const currentChainId = await checkNetwork();
-    console.log('Current Chain ID:', currentChainId);
-    console.log('Arbitrum Sepolia Balance:', arbSepoliaBalance?.formatted, 'ETH');
-
+    
     if (currentChainId !== 421614) {
       alert('Please switch to Arbitrum Sepolia (chainId 421614) in MetaMask before proceeding.');
       return;
     }
 
-    if (!arbSepoliaBalance || Number(arbSepoliaBalance.value) <= parseEther('0.00001')) {
-      alert('Insufficient ETH on Arbitrum Sepolia for gas and transaction. You need at least 0.00001 ETH plus gas.');
+    if (balanceLoading) return;
+
+    if (!arbSepoliaBalance || Number(arbSepoliaBalance.value) < 10000000000000) {
+      alert('Insufficient ETH on Arbitrum Sepolia. You need at least 0.00001 ETH.');
       return;
     }
 
-    writeContract({
-      address: '0xf8787780Aca612E4999a3fF7B371D2aD6219CE7f', // Inbox contract on Arbitrum Sepolia
-      abi: [
-        {
-          name: 'depositEth',
-          type: 'function',
-          stateMutability: 'payable',
-          inputs: [],
-          outputs: [{ name: '', type: 'uint256' }],
-        },
-      ],
-      functionName: 'depositEth',
-      value: parseEther('0.00001'), // 0.00001 ETH
-      chainId: 421614, // Arbitrum Sepolia
-    });
+    setChainAdded(true);
+    onComplete();
+    setPopupOpen(false);
   };
 
   const dynamicPopupText = () => {
+    const faucetText = 'Use the faucet to obtain Arbitrum Sepolia ETH: https://www.alchemy.com/faucets/arbitrum-sepolia';
+
     if (mode === 'educational') {
-      if (!address) return 'Please connect your wallet first.';
+      if (!address) return `Please connect your wallet first. ${faucetText}`;
       if (balanceLoading) return 'Checking your Arbitrum Sepolia balance...';
-      if (isPending) return 'Transaction is pending...';
-      if (isConfirming) return 'Waiting for transaction confirmation...';
-      if (isConfirmed) return 'ETH successfully bridged to Rollup 327!';
-      if (error) return `Error: ${error.message}`;
+      if (arbSepoliaBalance) {
+        return `Current balance: ${arbSepoliaBalance.formatted} ETH. ${
+          chainAdded ? 'Ready to proceed!' : 'Minimum 0.00001 ETH required.'
+        } ${faucetText}`;
+      }
+      return `${popupText} ${faucetText}`;
     }
     return popupText;
   };
@@ -99,50 +83,15 @@ const Step3 = ({ mode, isCompleted, onComplete }: StepProps) => {
       onComplete();
       setPopupOpen(false);
     } else {
-      handleBridgeEth();
+      handleCheckBalance();
     }
   };
 
-  // Start countdown when transaction is confirmed
-  useEffect(() => {
-    if (mode === 'educational' && isConfirmed && countdown === null) {
-      setCountdown(900); // 15 minutes = 900 seconds
-    }
-  }, [isConfirmed, mode, countdown]);
-
-  // Countdown timer logic
-  useEffect(() => {
-    if (countdown === null || countdown <= 0) return;
-
-    const timer = setInterval(() => {
-      setCountdown((prev) => (prev !== null ? prev - 1 : null));
-    }, 1000);
-
-    return () => clearInterval(timer); // Cleanup on unmount or when countdown changes
-  }, [countdown]);
-
-  // Format countdown to MM:SS
-  const formatCountdown = () => {
-    if (countdown === null || countdown <= 0) return '00:00';
-    const minutes = Math.floor(countdown / 60);
-    const seconds = countdown % 60;
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-  // Complete step when transaction is confirmed in educational mode
-  useEffect(() => {
-    if (mode === 'educational' && isConfirmed) {
-      setChainAdded(true);
-      onComplete();
-      setPopupOpen(false);
-    }
-  }, [isConfirmed, mode, onComplete]);
-
-  const handleViewExplorer = () => {
-    if (hash) {
-      const explorerUrl = `https://sepolia.arbiscan.io/tx/${hash}`;
-      window.open(explorerUrl, '_blank');
-    }
+  const isButtonDisabled = () => {
+    if (mode === 'game') return false;
+    if (!address || balanceLoading) return true;
+    if (arbSepoliaBalance && Number(arbSepoliaBalance.value) < 10000000000000) return true;
+    return chainAdded;
   };
 
   return (
@@ -166,39 +115,15 @@ const Step3 = ({ mode, isCompleted, onComplete }: StepProps) => {
         >
           {isCompleted ? 'Completed' : 'Complete Step'}
         </Button>
-        {mode === 'educational' && (
-          <>
-            <Button
-              variant="outlined"
-              onClick={handleViewExplorer}
-              disabled={!hash}
-            >
-              View on Arbiscan
-            </Button>
-            {isConfirmed && (
-              <Typography variant="body2" sx={{ color: 'grey.400' }}>
-                Bridge Time Remaining: {formatCountdown()}
-              </Typography>
-            )}
-          </>
-        )}
       </Box>
       <StepPopup
         open={popupOpen}
         onClose={() => setPopupOpen(false)}
         title={popupTitle}
         text={dynamicPopupText()}
-        buttonText={
-          mode === 'game'
-            ? popupButtonText
-            : isPending || isConfirming
-              ? 'Processing...'
-              : isConfirmed
-                ? 'Done'
-                : popupButtonText
-        }
+        buttonText={popupButtonText}
         buttonAction={handlePopupButtonAction}
-        buttonDisabled={mode === 'game' ? false : isPending || isConfirming || isConfirmed}
+        buttonDisabled={isButtonDisabled()}
       />
     </Box>
   );

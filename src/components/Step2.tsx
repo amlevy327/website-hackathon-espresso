@@ -16,17 +16,17 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
 
   const { address } = useAccount(); // Get connected wallet address from wagmi
 
-  const title = mode === 'game' ? 'Step 2: Travel to Planet Arbitrum' : 'Step 2: Switch to Arbitrum Sepolia network';
+  const title = mode === 'game' ? 'Step 2: Travel to Planet Arbitrum' : 'Step 2: Switch network to Arbitrum Sepolia';
   const text =
     mode === 'game'
       ? 'Head to Planet Arbitrum for easier access to Planet 327.'
-      : 'Switch to Arbitrum Sepolia network. You need some ETH on Arbitrum Sepolia.';
+      : 'Your mission begins on Arbitrum Sepolia!';
 
   const popupTitle = mode === 'game' ? 'Travel to Planet Arbitrum' : 'Switch to Arbitrum Sepolia';
   const popupText =
     mode === 'game'
       ? 'Planet Arbitrum is in the same Orbit as Planet 327 and will act as your launchpoint. Safe travels!'
-      : 'Switch your wallet to Arbitrum Sepolia to proceed. You need some ETH on Arbitrum Sepolia to continue.';
+      : 'Switch your wallet to Arbitrum Sepolia to proceed.';
 
   const popupButtonText = mode === 'game' ? 'Travel' : 'Switch Network';
 

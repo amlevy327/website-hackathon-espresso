@@ -19,13 +19,13 @@ const Step1 = ({ mode, walletAddress, isCompleted, onComplete }: StepProps) => {
   const text =
     mode === 'game'
       ? 'Review your task list and start your adventure.'
-      : 'Connect your wallet to accept the mission and begin.';
+      : 'Connect your wallet to accept the mission!';
 
   const popupTitle = mode === 'game' ? 'Accept Mission' : 'Get Started';
   const popupText =
     mode === 'game'
       ? 'You will access the Warp Tunnel from Planet 327. You will start on Earth, travel to Planet Arbitrum, travel to Planet 327, send a message through the Warp Tunnel, and finally receive a Landing Permit on Planet Base'
-      : 'Connect your wallet to begin your mission using MetaMask.';
+      : 'Connect your Metamask wallet.';
 
   const metaMaskConnector = connectors.find(
     (connector) => connector.name.toLowerCase() === 'metamask'
