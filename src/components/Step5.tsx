@@ -13,7 +13,7 @@ const Step5 = ({ mode, isCompleted, onComplete }: StepProps) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [networkSwitched, setNetworkSwitched] = useState(false);
 
-  const title = mode === 'game' ? 'Step 4: Access Warp Tunnel' : 'Step 4: Switch to Rollup 327';
+  const title = mode === 'game' ? 'Step : Access Warp Tunnel' : 'Step 5: Switch to Rollup 327';
   const text =
     mode === 'game'
       ? 'Access the Warp Tunnel by connecting to Rollup 327.'
