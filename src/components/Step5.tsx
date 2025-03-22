@@ -53,8 +53,8 @@ const Step5 = ({ mode, isCompleted, onComplete }: StepProps) => {
             params: [
               {
                 chainId: '0x' + (327327327).toString(16),
-                chainName: 'Rollup 327',
-                rpcUrls: ['http://127.0.0.1:8547'], // Adjust if RPC differs
+                chainName: 'Rollup 327 - DO',
+                rpcUrls: ['http://165.227.185.13:8547'], // Adjust if RPC differs
                 nativeCurrency: {
                   name: 'Ether',
                   symbol: 'ETH',

@@ -38,7 +38,7 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
 
   // Check NFT balance on Rollup 327 (ERC-721 Enumerable)
   const { data: nftBalance, isLoading: balanceLoading, error: balanceError } = useReadContract({
-    address: '0xcC65dc1148ca40a27F2E70ae08090b2613577a32', // NFT contract on Rollup 327
+    address: '0xcE5c4E995CE88c0889f0D2ED4981bCBcF2f68063', // NFT contract on Rollup 327
     abi: [
       {
         name: 'balanceOf',
@@ -71,7 +71,7 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
       if (!address) return 'Please connect your wallet first.';
       if (balanceLoading) return 'Checking your NFT balance on Rollup 327...';
       if (balanceError) {
-        return `Error checking NFT balance: ${balanceError.message}. Ensure you're on Rollup 327 (chainId 327327327) and the contract is deployed at 0x5FbDB2315678afecb367f032d93F642f64180aa3.`;
+        return `Error checking NFT balance: ${balanceError.message}. Ensure you're on Rollup 327 (chainId 327327327) and the contract is deployed at 0xcE5c4E995CE88c0889f0D2ED4981bCBcF2f68063.`;
       }
       if (hasNFT) return 'You have an NFT!';
       return 'No NFT found on Rollup 327 for your address. Did the payment from Step 6 process correctly?';
