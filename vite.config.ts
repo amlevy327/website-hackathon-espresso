@@ -7,7 +7,8 @@ export default defineConfig({
   server: {
     proxy: {
       '/rpc': {
-        target: 'http://127.0.0.1:8547', // Your rollup node
+        target: 'http://165.227.185.13:8547', // Digital Ocean
+        //target: 'http://127.0.0.1:8547', // Localhost
         changeOrigin: true, // Sets Host header to match target
         rewrite: (path) => path.replace(/^\/rpc/, ''), // Remove /rpc prefix
         secure: false, // Allow non-HTTPS for local dev
