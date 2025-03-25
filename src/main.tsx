@@ -9,6 +9,11 @@ import { config } from './wagmi.ts'
 
 import './index.css'
 
+declare global {
+  // Extend globalThis to allow assigning Buffer
+  var Buffer: typeof import('buffer').Buffer
+}
+
 globalThis.Buffer = Buffer
 
 const queryClient = new QueryClient()

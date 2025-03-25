@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Avatar, Typography } from '@mui/material';
 import earthGame from '../public/planets/earth-game.png';
 import earthEdu from '../public/planets/earth-edu.jpg';

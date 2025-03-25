@@ -1,5 +1,5 @@
 // src/components/Step2.tsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { useAccount, useBalance } from 'wagmi';
 import StepPopup from './StepPopup';

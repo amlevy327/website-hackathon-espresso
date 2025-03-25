@@ -1,7 +1,7 @@
 // src/App.tsx
 import React, { useState } from 'react';
 import { useAccount, useConnect, useDisconnect, useBalance, useReadContract } from 'wagmi';
-import { Box, Switch, FormControlLabel, Typography, Button } from '@mui/material';
+import { Box, Switch, FormControlLabel, Typography } from '@mui/material';
 import StarMap from './components/StarMap';
 import Step1 from './components/Step1';
 import Step2 from './components/Step2';
