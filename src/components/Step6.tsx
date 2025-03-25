@@ -1,5 +1,5 @@
 // src/components/Step6.tsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, Button, TextField } from '@mui/material';
 import { useSendTransaction, useWaitForTransactionReceipt } from 'wagmi';
 import StepPopup from './StepPopup';

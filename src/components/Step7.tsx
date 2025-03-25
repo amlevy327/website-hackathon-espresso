@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { useAccount, useReadContract } from 'wagmi';
 import StepPopup from './StepPopup';
@@ -66,7 +66,6 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
   // Fetch token ID if balance is exactly 1
   const {
     data: tokenIdData,
-    error: tokenIdError,
   } = useReadContract({
     address: CONTRACT_ADDRESS,
     abi: [

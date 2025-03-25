@@ -1,5 +1,4 @@
 // src/components/StepPopup.tsx
-import React from 'react';
 import {
   Dialog,
   DialogTitle,
