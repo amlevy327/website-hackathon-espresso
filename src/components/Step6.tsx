@@ -18,14 +18,14 @@ const Step6 = ({ mode, isCompleted, onComplete }: StepProps) => {
   const title = mode === 'game' ? 'Step 6: Send Payment' : 'Step 6: Send Payment';
   const text =
     mode === 'game'
-      ? 'Send payment to Planet Base using the Warp Tunnel '
+      ? 'Send payment to Planet Sepolia using the Warp Tunnel '
       : 'Send a payment to a designated wallet that is tracked for Espresso confirmations.';
   
   const popupTitle = mode === 'game' ? 'Send Payment' : 'Send Payment';
   const popupText =
     mode === 'game'
-      ? 'By sending a payment to Planet Base using the Warp Tunnel, Planet Base can accept the payment and issue you a Landing Permit in seconds.'
-      : 'Send 1 Wei to a designated wallet. An Espresso enabled relay will look for transactions to that wallet and mint an NFT on Base Sepolia.';
+      ? 'By sending a payment to Planet Sepolia using the Warp Tunnel, Planet Sepolia can accept the payment and issue you a Landing Permit in seconds.'
+      : 'Send 1 Wei to a designated wallet. An Espresso enabled relay will look for transactions to that wallet and mint an NFT on Sepolia.';
   const popupButtonText = mode === 'game' ? 'Send Payment' : 'Send 1 Wei';
 
   // Wagmi hooks for sending ETH

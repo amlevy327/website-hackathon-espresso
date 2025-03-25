@@ -1,4 +1,3 @@
-// src/components/Step7.tsx
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { useAccount, useReadContract } from 'wagmi';
@@ -10,17 +9,21 @@ interface StepProps {
   onComplete: () => void;
 }
 
+const CONTRACT_ADDRESS = '0xf1a8a6A06AB68418F738CabA5a60Fd8B2508d68F';
+const SEPOLIA_CHAIN_ID = 11155111;
+
 const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
   const [popupOpen, setPopupOpen] = useState(false);
+  const [tokenId, setTokenId] = useState<string | null>(null);
 
   const title = mode === 'game' ? 'Step 7: Confirm Landing Permit' : 'Step 7: Confirm NFT Received';
   const text =
     mode === 'game'
       ? 'Verify that you received your Landing Permit on Planet Base.'
-      : 'Verify that you received your NFT on Rollup 327';
+      : 'Verify that you received your NFT on Sepolia';
 
   const popupTitle = mode === 'game' ? 'Confirm Landing Permit' : 'Confirm NFT Received';
-  const popupButtonText = mode === 'game' ? 'Complete Mission' : 'View on Magic Eden';
+  const popupButtonText = mode === 'game' ? 'Complete Mission' : 'View on OpenSea';
 
   const { address } = useAccount();
 
@@ -36,9 +39,13 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
     return parsedChainId;
   };
 
-  // Check NFT balance on Rollup 327 (ERC-721 Enumerable)
-  const { data: nftBalance, isLoading: balanceLoading, error: balanceError } = useReadContract({
-    address: '0xcE5c4E995CE88c0889f0D2ED4981bCBcF2f68063', // NFT contract on Rollup 327
+  // Check NFT balance on Sepolia
+  const {
+    data: nftBalance,
+    isLoading: balanceLoading,
+    error: balanceError,
+  } = useReadContract({
+    address: CONTRACT_ADDRESS,
     abi: [
       {
         name: 'balanceOf',
@@ -50,31 +57,61 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
     ],
     functionName: 'balanceOf',
     args: [address as `0x${string}`],
-    chainId: 327327327, // Rollup 327
-    query: { enabled: !!address }, // Only run if address is available
+    chainId: SEPOLIA_CHAIN_ID,
+    query: { enabled: !!address },
   });
 
-  // Debug network on mount
+  const hasNFT = nftBalance && BigInt(nftBalance.toString()) > 0;
+
+  // Fetch token ID if balance is exactly 1
+  const {
+    data: tokenIdData,
+    error: tokenIdError,
+  } = useReadContract({
+    address: CONTRACT_ADDRESS,
+    abi: [
+      {
+        name: 'tokenOfOwnerByIndex',
+        type: 'function',
+        stateMutability: 'view',
+        inputs: [
+          { name: 'owner', type: 'address' },
+          { name: 'index', type: 'uint256' },
+        ],
+        outputs: [{ name: '', type: 'uint256' }],
+      },
+    ],
+    functionName: 'tokenOfOwnerByIndex',
+    args:
+      !!address && nftBalance?.toString() === '1'
+        ? [address as `0x${string}`, 0n]
+        : undefined,
+    chainId: SEPOLIA_CHAIN_ID,
+    query: {
+      enabled: !!address && nftBalance?.toString() === '1',
+    },
+  });
+
+  // Set tokenId once loaded
+  useEffect(() => {
+    if (tokenIdData) {
+      setTokenId(tokenIdData.toString());
+    }
+  }, [tokenIdData]);
+
   useEffect(() => {
     checkNetwork();
   }, []);
 
-  console.log('Connected Address:', address);
-  console.log('NFT Balance:', nftBalance?.toString());
-  console.log('Balance Loading:', balanceLoading);
-  console.log('Balance Error:', balanceError);
-
-  const hasNFT = nftBalance && BigInt(nftBalance.toString()) > 0;
-
   const dynamicPopupText = () => {
     if (mode === 'educational') {
       if (!address) return 'Please connect your wallet first.';
-      if (balanceLoading) return 'Checking your NFT balance on Rollup 327...';
+      if (balanceLoading) return 'Checking your NFT balance on Sepolia...';
       if (balanceError) {
-        return `Error checking NFT balance: ${balanceError.message}. Ensure you're on Rollup 327 (chainId 327327327) and the contract is deployed at 0xcE5c4E995CE88c0889f0D2ED4981bCBcF2f68063.`;
+        return `Error checking NFT balance: ${balanceError.message}. Ensure you're on Sepolia (chainId 11155111) and the contract is deployed at ${CONTRACT_ADDRESS}.`;
       }
       if (hasNFT) return 'You have an NFT!';
-      return 'No NFT found on Rollup 327 for your address. Did the payment from Step 6 process correctly?';
+      return 'No NFT found on Sepolia for your address. Did the payment from Step 6 process correctly?';
     }
     return mode === 'game'
       ? 'Wow, you received the Landing Permit in 2 seconds and never had to travel there! This Warp Tunnel is amazing!'
@@ -86,7 +123,10 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
       onComplete();
       setPopupOpen(false);
     } else if (hasNFT) {
-      window.open('https://magiceden.us/', '_blank');
+      const link = tokenId
+        ? `https://testnets.opensea.io/assets/sepolia/${CONTRACT_ADDRESS}/${tokenId}`
+        : `https://testnets.opensea.io/collection/espresso-stellar-nft-2`;
+      window.open(link, '_blank');
       onComplete();
       setPopupOpen(false);
     }
