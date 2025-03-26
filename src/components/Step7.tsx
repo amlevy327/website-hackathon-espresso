@@ -16,14 +16,14 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [tokenId, setTokenId] = useState<string | null>(null);
 
-  const title = mode === 'game' ? 'Step 7: Confirm Landing Permit' : 'Step 7: Confirm NFT Received';
+  const title = mode === 'game' ? 'Step 7: Claim Your Galactic Prize' : 'Step 7: Confirm Your NFT';
   const text =
     mode === 'game'
-      ? 'Verify that you received your Landing Permit on Planet Base.'
-      : 'Verify that you received your NFT on Sepolia';
+      ? 'Receive your Landing Permit on Planet Sepolia in seconds, proof of your Warp Tunnel mastery!'
+      : 'Receive your NFT on Ethereum Sepolia in seconds, Espresso’s speed in action!';
 
   const popupTitle = mode === 'game' ? 'Confirm Landing Permit' : 'Confirm NFT Received';
-  const popupButtonText = mode === 'game' ? 'Complete Mission' : 'View on OpenSea';
+  const popupButtonText = mode === 'game' ? 'Claim Your Galactic Prize' : 'Confirm Your NFT';
 
   const { address } = useAccount();
 
@@ -109,12 +109,12 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
       if (balanceError) {
         return `Error checking NFT balance: ${balanceError.message}. Ensure you're on Sepolia (chainId 11155111) and the contract is deployed at ${CONTRACT_ADDRESS}.`;
       }
-      if (hasNFT) return 'You have an NFT!';
+      if (hasNFT) return 'Success! Your NFT has landed on Ethereum Sepolia in mere seconds, powered by Espresso Confirmations. No 15-minute wait, no Ethereum Sepolia gas, just pure speed. Confirm your prize and celebrate the future of blockchain!';
       return 'No NFT found on Sepolia for your address. Did the payment from Step 6 process correctly?';
     }
     return mode === 'game'
-      ? 'Wow, you received the Landing Permit in 2 seconds and never had to travel there! This Warp Tunnel is amazing!'
-      : 'Wow, you received the NFT in 2 seconds and never had to have ETH on Base Sepolia! Espresso confirmations are amazing!';
+      ? 'Incoming transmission! Your Landing Permit has arrived on Planet Sepolia in just seconds, thanks to the Warp Tunnel’s power. No 15-minute delays here, this is the future of galactic travel. Claim your prize and bask in your Pioneer glory!'
+      : 'Incoming transmission! Your Landing Permit has arrived on Planet Sepolia in just seconds, thanks to the Warp Tunnel’s power. No 15-minute delays here, this is the future of galactic travel. Claim your prize and bask in your Pioneer glory!';
   };
 
   const handlePopupButtonAction = () => {

@@ -20,21 +20,21 @@ const Step3 = ({ mode, isCompleted, onComplete }: StepProps) => {
     chainId: 421614, // Arbitrum Sepolia
   });
 
-  const title = mode === 'game' ? 'Step 3: Travel to Planet 327' : 'Step 3: Get Arbitrum Sepolia ETH';
+  const title = mode === 'game' ? 'Step 3: Fuel Up with Cosmic Credits' : 'Step 3: Grab Arbitrum Sepolia ETH';
   const text =
     mode === 'game'
-      ? 'Head to Planet 327 to access the Warp Tunnel.'
-      : 'You need gas.';
+      ? 'Gather the energy reserves you’ll need to power your mission across the galaxy.'
+      : 'Load up on testnet ETH to fuel your cross-chain mission.';
   
-  const popupTitle = mode === 'game' ? 'Travel to Planet 327' : 'Check Balance';
+  const popupTitle = mode === 'game' ? 'Fuel Up with Cosmic Credits' : 'Grab Arbitrum Sepolia ETH';
   const popupText =
     mode === 'game'
-      ? 'Planet 327 has access to the Warp Tunnel and will allow you to communicate with Planet Base without traveling there. Safe travels!'
+      ? 'You’ve landed on Planet Arbitrum! To continue travel, you’ll need Cosmic Credits. Stock up at the orbital station. Let’s power up!'
       : chainAdded
-      ? 'Rollup 327 has been added to MetaMask!'
+      ? '???'
       : 'Verify you have sufficient balance on Arbitrum Sepolia (minimum 0.00001 ETH).';
 
-  const popupButtonText = mode === 'game' ? 'Travel' : chainAdded ? 'Done' : 'Check Balance';
+  const popupButtonText = mode === 'game' ? 'Collect Credits' : chainAdded ? 'Done' : 'Check Balance';
 
   const checkNetwork = async () => {
     if (!window.ethereum) return null;

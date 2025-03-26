@@ -22,20 +22,20 @@ const Step4 = ({ mode, isCompleted, onComplete }: StepProps) => {
     chainId: 421614, // Arbitrum Sepolia
   });
 
-  const title = mode === 'game' ? 'Step 4: Travel to Planet 327' : 'Step 4: Bridge ETH to Arbitrum Nitro Sepolia Rollup 327327327';
+  const title = mode === 'game' ? 'Step 4: Brave the Void Bridge' : 'Step 4: Bridge ETH to Arbitrum Nitro Sepolia Rollup 327327327';
   const text =
     mode === 'game'
-      ? 'Head to Planet 327 to access the Warp Tunnel.'
-      : 'Bridge ETH to Arbitrum Nitro Rollup 327327327.';
+      ? 'Send your credits across the slow, treacherous void to Planet 327. Warning: this takes a grueling 15 minutes!'
+      : 'Send your ETH to Rollup 327327327. Warning: this old-school bridge takes 15 minutes!';
   
-  const popupTitle = mode === 'game' ? 'Travel to Planet 327' : 'Bridge ETH';
+  const popupTitle = mode === 'game' ? 'Brave the Void Bridge' : 'Bridge ETH to Rollup 327327327';
   const popupText =
     mode === 'game'
       ? 'Planet 327 has access to the Warp Tunnel and will allow you to communicate with Planet Base without traveling there. Safe travels!'
       : chainAdded
-      ? 'Rollup 327 has been added to MetaMask!'
-      : 'Bridge ETH by sending ETH to the inbox smart contract on Arbitrum Sepolia. This may take up to 15 minutes! Isnt that a crazy amount of time!';
-  const popupButtonText = mode === 'game' ? 'Travel' : chainAdded ? 'Done' : 'Bridge ETH';
+      ? 'From Planet Arbitrum, you’re bridging your Cosmic Credits to Planet 327, but there’s a catch. Without the Warp Tunnel, this trip through the void takes 15 long minutes. It’s the old way: slow, unreliable, and a galactic bottleneck. Hang tight, relief is coming soon!'
+      : 'From Arbitrum Sepolia, bridge your ETH to Rollup 327327327. Here’s the catch: without Espresso, this transfer crawls at 15 minutes. It’s the classic blockchain bottleneck, slow and painful. Start the bridge and feel the drag!';
+  const popupButtonText = mode === 'game' ? 'Start Bridge Crossing' : chainAdded ? 'Done' : 'Bridge ETH';
 
   // Wagmi hooks for transaction
   const { writeContract, data: hash, error, isPending } = useWriteContract();
