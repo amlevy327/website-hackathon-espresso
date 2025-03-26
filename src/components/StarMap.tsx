@@ -1,14 +1,12 @@
 import { Box, Avatar, Typography } from '@mui/material';
-import earthGame from '../public/planets/earth-game.png';
-import earthEdu from '../public/planets/earth-edu.jpg';
+import sepGame from '../public/planets/sep-game.png';
+import sepEdu from '../public/planets/sep-edu.jpg';
 import arbGame from '../public/planets/arb-game.png';
 import arbEdu from '../public/planets/arb-edu.png';
 import espressoGame from '../public/planets/espresso-game.png';
 import espressoEdu from '../public/planets/espresso-edu.png';
 import planet327Game from '../public/planets/planet327-game.png';
 import planet327Edu from '../public/planets/planet327-edu.png';
-import planetBaseGame from '../public/planets/planetbase-game.png';
-import planetBaseEdu from '../public/planets/planetbase-edu.png';
 
 interface StarMapProps {
   isConnected: boolean;
@@ -19,41 +17,37 @@ interface StarMapProps {
     rollup327: number;
   };
   mode: 'game' | 'educational';
-  hasRollup327Nft?: boolean;
+  hasSepoliaNft?: boolean;
 }
 
-const StarMap = ({ isConnected, chainId, balances, mode, hasRollup327Nft }: StarMapProps) => {
+const StarMap = ({ isConnected, chainId, balances, mode, hasSepoliaNft }: StarMapProps) => {
   const chainToPlanet: { [key: number]: string } = {
-    11155111: mode === 'game' ? 'Earth' : 'Ethereum Sepolia',
+    11155111: mode === 'game' ? 'PlanetSep' : 'Ethereum Sepolia',
     421614: mode === 'game' ? 'PlanetArb' : 'Arbitrum Sepolia',
     327327327: mode === 'game' ? 'Planet327' : 'Rollup 327327327',
-    84532: mode === 'game' ? 'PlanetBase' : 'Base Sepolia',
   };
 
   const planetImages: { [key: string]: string } = mode === 'game' 
   ? {
-      Earth: earthGame,
+      PlanetSep: sepGame,
       PlanetArb: arbGame,
       Planet327: planet327Game,
-      PlanetBase: planetBaseGame,
       WarpTunnel: espressoGame
     }
   : {
-      "Ethereum Sepolia": earthEdu,
+      "Ethereum Sepolia": sepEdu,
       "Arbitrum Sepolia": arbEdu,
       "Rollup 327327327": planet327Edu,
-      "Base Sepolia": planetBaseEdu,
       "Espresso": espressoEdu,
   };
 
   const currentPlanet = isConnected && chainId ? chainToPlanet[chainId] : null;
 
   const planetPositions = {
-    [mode === 'game' ? 'Earth' : 'Ethereum Sepolia']: { x: 50, y: 150, balance: balances.ethSepolia },
-    [mode === 'game' ? 'PlanetArb' : 'Arbitrum Sepolia']: { x: 200, y: 50, balance: balances.arbSepolia },
-    [mode === 'game' ? 'Planet327' : 'Rollup 327327327']: { x: 300, y: 150, balance: balances.rollup327 },
-    [mode === 'game' ? 'PlanetBase' : 'Base Sepolia']: { x: 350, y: 50, balance: 0 },
-    [mode === 'game' ? 'WarpTunnel' : 'Espresso']: { x: 550, y: 150, balance: 0 },
+    [mode === 'game' ? 'PlanetSep' : 'Ethereum Sepolia']: { x: 450, y: 150, balance: balances.ethSepolia },
+    [mode === 'game' ? 'PlanetArb' : 'Arbitrum Sepolia']: { x: 50, y: 150, balance: balances.arbSepolia },
+    [mode === 'game' ? 'Planet327' : 'Rollup 327327327']: { x: 200, y: 50, balance: balances.rollup327 },
+    [mode === 'game' ? 'WarpTunnel' : 'Espresso']: { x: 300, y: 150, balance: 0 },
   };
 
   return (
@@ -107,7 +101,7 @@ const StarMap = ({ isConnected, chainId, balances, mode, hasRollup327Nft }: Star
               🛢️
             </Typography>
           )}
-          {name === (mode === 'game' ? 'Planet327' : 'Rollup 327') && hasRollup327Nft && (
+          {name === (mode === 'game' ? 'PlanetSep' : 'Ethereum Sepolia') && hasSepoliaNft && (
             <Typography
               sx={{
                 position: 'absolute',

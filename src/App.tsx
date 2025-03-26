@@ -35,7 +35,7 @@ function App() {
   });
 
   const { data: nftBalance } = useReadContract({
-    address: '0xf957D78bDcdAD0Ca846b1D3ff9858B8Ef5A9E2FF',
+    address: '0xf1a8a6A06AB68418F738CabA5a60Fd8B2508d68F',
     abi: [
       {
         inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
@@ -47,7 +47,7 @@ function App() {
     ],
     functionName: 'balanceOf',
     args: [address as `0x${string}`],
-    chainId: 327327327,
+    chainId: 11155111,
     query: {
       enabled: !!address,
     },
@@ -156,7 +156,7 @@ function App() {
             chainId={chainId}
             balances={balances}
             mode={mode}
-            hasRollup327Nft={hasNft}
+            hasSepoliaNft={hasNft}
           />
         </Box>
 
