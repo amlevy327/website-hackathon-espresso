@@ -15,18 +15,18 @@ const Step6 = ({ mode, isCompleted, onComplete }: StepProps) => {
   const [txHash, setTxHash] = useState<string | undefined>(undefined);
   const [wrongNetworkPopupOpen, setWrongNetworkPopupOpen] = useState(false);
 
-  const title = mode === 'game' ? 'Step 6: Send Payment' : 'Step 6: Send Payment';
+  const title = mode === 'game' ? 'Step 6: Send Signal Through Warp Tunnel' : 'Step 6: Send Payment via Espresso';
   const text =
     mode === 'game'
-      ? 'Send payment to Planet Sepolia using the Warp Tunnel '
-      : 'Send a payment to a designated wallet that is tracked for Espresso confirmations.';
+      ? 'Transmit a payment signal through the Warp Tunnel to request your Landing Permit.'
+      : 'Make a payment on Rollup 327327327, Espresso kicks in here!';
   
-  const popupTitle = mode === 'game' ? 'Send Payment' : 'Send Payment';
+  const popupTitle = mode === 'game' ? 'Send Signal Through Warp Tunnel' : 'Send Payment via Espresso';
   const popupText =
     mode === 'game'
-      ? 'By sending a payment to Planet Sepolia using the Warp Tunnel, Planet Sepolia can accept the payment and issue you a Landing Permit in seconds.'
-      : 'Send 1 Wei to a designated wallet. An Espresso enabled relay will look for transactions to that wallet and mint an NFT on Sepolia.';
-  const popupButtonText = mode === 'game' ? 'Send Payment' : 'Send 1 Wei';
+      ? 'From Planet 327, activate the Warp Tunnel! Send a payment signal, a burst of Cosmic Credits, to request your Landing Permit. A relay drone will zip it to Planet Sepolia using the tunnel’s blazing speed. Fire it up and watch the magic happen!'
+      : 'Espresso Confirmations are enabled on Rollup 327327327 and we will send a payment to a tracked wallet. A relay will pick it up and trigger an NFT mint on Ethereum Sepolia, blazing fast, no delays. Hit send and watch Espresso work its magic!';
+  const popupButtonText = mode === 'game' ? 'Transmit Signal' : 'Send 1 Wei';
 
   // Wagmi hooks for sending ETH
   const { sendTransaction, data: hash, error, isPending, isError } = useSendTransaction();

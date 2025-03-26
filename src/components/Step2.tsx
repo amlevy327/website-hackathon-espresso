@@ -16,19 +16,19 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
 
   const { address } = useAccount(); // Get connected wallet address from wagmi
 
-  const title = mode === 'game' ? 'Step 2: Travel to Planet Arbitrum' : 'Step 2: Switch network to Arbitrum Sepolia';
+  const title = mode === 'game' ? 'Step 2: Jump to Planet Arbitrum' : 'Step 2: Switch to Arbitrum Sepolia';
   const text =
     mode === 'game'
-      ? 'Head to Planet Arbitrum for easier access to Planet 327.'
-      : 'Your mission begins on Arbitrum Sepolia!';
+      ? 'Shift your ship’s coordinates to the bustling hub of Planet Arbitrum, your first stop in the galaxy.'
+      : 'Flip your network to Arbitrum Sepolia, your launchpad for this adventure.';
 
-  const popupTitle = mode === 'game' ? 'Travel to Planet Arbitrum' : 'Switch to Arbitrum Sepolia';
+  const popupTitle = mode === 'game' ? 'Jump to Planet Arbitrum' : 'Switch to Arbitrum Sepolia';
   const popupText =
     mode === 'game'
-      ? 'Planet Arbitrum is in the same Orbit as Planet 327 and will act as your launchpoint. Safe travels!'
-      : 'Switch your wallet to Arbitrum Sepolia to proceed.';
+      ? 'Time to leave Earth’s orbit! Set your navigation to Planet Arbitrum, a thriving trade world. This jump is instant, but the real challenge lies ahead. Align your ship and prepare for the journey!'
+      : 'Time to move! Switch your wallet to Arbitrum Sepolia. It’s a quick hop, think of it as setting your coordinates for the journey ahead. Let’s get aligned!';
 
-  const popupButtonText = mode === 'game' ? 'Travel' : 'Switch Network';
+  const popupButtonText = mode === 'game' ? 'Engage Jump Drive' : 'Switch Network';
 
   // Fetch Arbitrum Sepolia balance (chainId 421614)
   const { data: arbSepoliaBalance, isLoading: balanceLoading } = useBalance({

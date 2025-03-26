@@ -15,23 +15,23 @@ const Step1 = ({ mode, walletAddress, isCompleted, onComplete }: StepProps) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const { connectors, connect } = useConnect();
 
-  const title = mode === 'game' ? 'Step 1: Accept Mission' : 'Step 1: Accept Mission';
+  const title = mode === 'game' ? 'Step 1: Accept Your Galactic Mission' : 'Step 1: Accept Your Blockchain Quest';
   const text =
     mode === 'game'
-      ? 'Review your task list and start your adventure.'
-      : 'Connect your wallet to accept the mission!';
+      ? 'Review your interstellar task list and launch into the cosmos as a Space Pioneer!'
+      : 'Connect your wallet and kick off your journey to explore Espresso’s power!';
 
-  const popupTitle = mode === 'game' ? 'Accept Mission' : 'Get Started';
+  const popupTitle = mode === 'game' ? 'Accept Your Galactic Mission' : 'Accept Your Blockchain Quest';
   const popupText =
     mode === 'game'
-      ? 'You will access the Warp Tunnel from Planet 327. You will start on Earth, travel to Planet Arbitrum, travel to Planet 327, send a message through the Warp Tunnel, and finally receive a Landing Permit on Planet Base'
-      : 'Connect your Metamask wallet.';
+      ? 'Greetings, Pioneer! Your mission begins on Earth. You’ll journey to Planet Arbitrum, then to the remote Planet 327, where you’ll access the Warp Tunnel. Your goal? Send a message through the tunnel and secure a Landing Permit on Planet Sepolia, no hyperspace travel required. Ready to chart the stars?'
+      : 'Welcome, Explorer! Your mission: experience Espresso Confirmations firsthand. You’ll start on Arbitrum Sepolia, bridge to Arbitrum Nitro Sepolia Rollup 327327327, send a payment, and snag an NFT on Ethereum Sepolia, no Ethereum Sepolia gas needed. Connect your wallet and let’s hit the blockchain frontier!';
 
   const metaMaskConnector = connectors.find(
     (connector) => connector.name.toLowerCase() === 'metamask'
   );
 
-  const popupButtonText = mode === 'game' ? 'Accept Mission' : 'Connect with MetaMask';
+  const popupButtonText = mode === 'game' ? 'Launch Mission' : 'Connect Wallet';
   const popupButtonAction = mode === 'game'
     ? () => {
         onComplete(); // Mark step as complete in game mode

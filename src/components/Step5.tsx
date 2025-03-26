@@ -13,18 +13,18 @@ const Step5 = ({ mode, isCompleted, onComplete }: StepProps) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [networkSwitched, setNetworkSwitched] = useState(false);
 
-  const title = mode === 'game' ? 'Step : Access Warp Tunnel' : 'Step 5: Switch to Rollup 327';
+  const title = mode === 'game' ? 'Step 5: Land on Planet 327' : 'Step 5: Switch to Rollup 327327327';
   const text =
     mode === 'game'
-      ? 'Access the Warp Tunnel by connecting to Rollup 327.'
-      : 'Switch your network to Rollup 327.';
+      ? 'Touch down on the rugged frontier of Planet 327, a planet with access to the Warp Tunnel.'
+      : 'Jump to Rollup 327327327, where Espresso’s magic awaits.';
   
-  const popupTitle = mode === 'game' ? 'Connect to Warp Tunnel' : 'Switch Network';
+  const popupTitle = mode === 'game' ? 'Land on Planet 327' : 'Switch to Rollup 327327327';
   const popupText =
     mode === 'game'
-      ? 'Connect to Rollup 327 to access the Warp Tunnel for instant communication with Planet Base.'
-      : 'Switch your MetaMask network to Rollup 327 to proceed.';
-  const popupButtonText = mode === 'game' ? 'Connect' : networkSwitched ? 'Done' : 'Switch to Rollup 327';
+      ? 'You’ve crossed the void! Welcome to Planet 327, a wild outpost in the galaxy. The Warp Tunnel hums nearby, promising lightning-fast connections. Switch your ship’s signal to this planet’s frequency, adventure awaits!'
+      : 'Your ETH has arrived! Switch your wallet to Rollup 327327327, an Arbitrum L3 chain ready for action. This is where you can use Espresso, fast confirmations are just a step away. Tune in and let’s go!';
+  const popupButtonText = mode === 'game' ? 'Deploy Landing Gear' : networkSwitched ? 'Done' : 'Switch Network';
 
   // Function to switch to Rollup 327 network
   const switchToRollup327 = async () => {
@@ -53,7 +53,7 @@ const Step5 = ({ mode, isCompleted, onComplete }: StepProps) => {
             params: [
               {
                 chainId: '0x' + (327327327).toString(16),
-                chainName: 'Rollup 327 - DO',
+                chainName: 'Rollup 327',
                 rpcUrls: ['http://165.227.185.13:8547'], // Adjust if RPC differs
                 nativeCurrency: {
                   name: 'Ether',
