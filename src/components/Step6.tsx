@@ -161,7 +161,7 @@ const Step6 = ({ mode, isCompleted, onComplete }: StepProps) => {
         open={wrongNetworkPopupOpen}
         onClose={handleWrongNetworkPopupClose}
         title="Wrong Network"
-        text="Please switch to Rollup 327 (chainId 327327327) in MetaMask to proceed. You can add it manually if needed using RPC http://127.0.0.1:8547."
+        text="Please switch to Rollup 327 (chainId 327327327) in MetaMask to proceed. Please add in step 5."
         buttonText="Close"
         buttonAction={handleWrongNetworkPopupClose}
       />
