@@ -60,8 +60,8 @@ const Step4 = ({ mode, isCompleted, onComplete }: StepProps) => {
       return;
     }
 
-    if (!arbSepoliaBalance || Number(arbSepoliaBalance.value) <= parseEther('0.00001')) {
-      alert('Insufficient ETH on Arbitrum Sepolia for gas and transaction. You need at least 0.00001 ETH plus gas.');
+    if (!arbSepoliaBalance || Number(arbSepoliaBalance.value) <= parseEther('0.001')) {
+      alert('Insufficient ETH on Arbitrum Sepolia for gas and transaction. You need at least 0.001 ETH plus gas.');
       return;
     }
 
@@ -77,7 +77,7 @@ const Step4 = ({ mode, isCompleted, onComplete }: StepProps) => {
         },
       ],
       functionName: 'depositEth',
-      value: parseEther('0.00001'), // 0.00001 ETH
+      value: parseEther('0.001'), // 0.001 ETH
       chainId: 421614, // Arbitrum Sepolia
     });
   };

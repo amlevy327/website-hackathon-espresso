@@ -1,7 +1,7 @@
 // src/components/Step2.tsx
 import { useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
-import { useAccount, useBalance } from 'wagmi';
+import { useAccount } from 'wagmi';
 import StepPopup from './StepPopup';
 
 interface StepProps {
@@ -14,7 +14,7 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
   const [popupOpen, setPopupOpen] = useState(false);
   const [chainAdded, setChainAdded] = useState(false);
 
-  const { address } = useAccount(); // Get connected wallet address from wagmi
+  const { address } = useAccount();
 
   const title = mode === 'game' ? 'Step 2: Jump to Planet Arbitrum' : 'Step 2: Switch to Arbitrum Sepolia';
   const text =
@@ -30,20 +30,6 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
 
   const popupButtonText = mode === 'game' ? 'Engage Jump Drive' : 'Switch Network';
 
-  // Fetch Arbitrum Sepolia balance (chainId 421614)
-  const { data: arbSepoliaBalance, isLoading: balanceLoading } = useBalance({
-    address: address as `0x${string}`, // Use wagmi's connected address
-    chainId: 421614, // Arbitrum Sepolia
-  });
-
-  // Debug logging
-  console.log('Address:', address);
-  console.log('Arbitrum Sepolia Balance Data:', arbSepoliaBalance);
-  console.log('Balance Loading:', balanceLoading);
-
-  const hasArbSepoliaBalance = arbSepoliaBalance && Number(arbSepoliaBalance.value) > 0;
-
-  // Function to add and switch to Arbitrum Sepolia in MetaMask
   const addAndSwitchToArbitrumSepolia = async () => {
     if (!window.ethereum) {
       alert('MetaMask is not installed. Please install it to proceed.');
@@ -51,14 +37,13 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
     }
 
     try {
-      // Add Arbitrum Sepolia network
       await window.ethereum.request({
         method: 'wallet_addEthereumChain',
         params: [
           {
-            chainId: '0x' + (421614).toString(16), // Arbitrum Sepolia chainId in hex (0x66eee)
+            chainId: '0x' + (421614).toString(16),
             chainName: 'Arbitrum Sepolia',
-            rpcUrls: ['https://sepolia-rollup.arbitrum.io/rpc'], // Public RPC
+            rpcUrls: ['https://sepolia-rollup.arbitrum.io/rpc'],
             nativeCurrency: {
               name: 'Ether',
               symbol: 'ETH',
@@ -69,37 +54,32 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
         ],
       });
 
-      // Switch to Arbitrum Sepolia
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: '0x' + (421614).toString(16) }],
       });
 
       setChainAdded(true);
-      onComplete(); // Mark step as complete
-      setPopupOpen(false); // Close popup
+      onComplete();
+      setPopupOpen(false);
     } catch (err) {
       console.error('Failed to add/switch chain:', err);
     }
   };
 
   const dynamicPopupText = () => {
-    if (mode === 'educational') {
-      if (!address) return 'Please connect your wallet first.';
-      if (balanceLoading) return 'Checking your Arbitrum Sepolia balance...';
-      if (!hasArbSepoliaBalance) {
-        return 'You need ETH on Arbitrum Sepolia (chainId 421614) to proceed. Get some from a faucet or bridge ETH from Ethereum Sepolia.';
-      }
+    if (mode === 'educational' && !address) {
+      return 'Please connect your wallet first.';
     }
     return popupText;
   };
 
   const handlePopupButtonAction = () => {
     if (mode === 'game') {
-      onComplete(); // Mark step as complete in game mode
-      setPopupOpen(false); // Close popup
-    } else if (hasArbSepoliaBalance) {
-      addAndSwitchToArbitrumSepolia(); // Add and switch network in educational mode
+      onComplete();
+      setPopupOpen(false);
+    } else {
+      addAndSwitchToArbitrumSepolia();
     }
   };
 
@@ -109,7 +89,7 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
         p: 2,
         border: '1px dashed grey',
         borderRadius: 1,
-        backgroundColor: isCompleted ? 'rgba(144, 238, 144, 0.2)' : 'transparent', // Light green when completed
+        backgroundColor: isCompleted ? 'rgba(144, 238, 144, 0.2)' : 'transparent',
       }}
     >
       <Typography variant="h4" sx={{ fontSize: '1.25rem', mb: 1 }}>
@@ -120,7 +100,7 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
         <Button
           variant="contained"
           onClick={() => setPopupOpen(true)}
-          disabled={isCompleted} // Disable if completed
+          disabled={isCompleted}
         >
           {isCompleted ? 'Completed' : 'Complete Step'}
         </Button>
@@ -131,8 +111,8 @@ const Step2 = ({ mode, isCompleted, onComplete }: StepProps) => {
         title={popupTitle}
         text={dynamicPopupText()}
         buttonText={mode === 'game' ? popupButtonText : chainAdded ? 'Done' : popupButtonText}
-        buttonAction={mode === 'game' ? handlePopupButtonAction : hasArbSepoliaBalance ? handlePopupButtonAction : undefined}
-        buttonDisabled={mode === 'game' ? false : !address || balanceLoading || !hasArbSepoliaBalance || chainAdded}
+        buttonAction={handlePopupButtonAction}
+        buttonDisabled={mode === 'game' ? false : !address || chainAdded}
       />
     </Box>
   );
