@@ -1,6 +1,6 @@
 // src/App.tsx
 import React, { useState } from 'react';
-import { useAccount, useConnect, useDisconnect, useBalance, useReadContract } from 'wagmi';
+import { useAccount, useBalance, useReadContract } from 'wagmi';
 import { Box, Switch, FormControlLabel, Typography } from '@mui/material';
 import StarMap from './components/StarMap';
 import Step1 from './components/Step1';
@@ -13,9 +13,6 @@ import Step7 from './components/Step7';
 
 function App() {
   const account = useAccount();
-  const { connectors, connect, status, error } = useConnect();
-  const { disconnect } = useDisconnect();
-
   const { isConnected, chainId, address } = account;
 
   // *** Balances ***
@@ -94,37 +91,6 @@ function App() {
 
   return (
     <>
-      <div>
-        <h2>Account</h2>
-        <div>
-          status: {account.status}
-          <br />
-          addresses: {JSON.stringify(account.addresses)}
-          <br />
-          chainId: {account.chainId}
-        </div>
-        {account.status === 'connected' && (
-          <button type="button" onClick={() => disconnect()}>
-            Disconnect
-          </button>
-        )}
-      </div>
-
-      <div>
-        <h2>Connect</h2>
-        {connectors.map((connector) => (
-          <button
-            key={connector.uid}
-            onClick={() => connect({ connector })}
-            type="button"
-          >
-            {connector.name}
-          </button>
-        ))}
-        <div>{status}</div>
-        <div>{error?.message}</div>
-      </div>
-
       <Box sx={{ border: '1px solid grey', borderRadius: 2, p: 2 }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
           <Typography variant="h1" sx={{ fontSize: '2rem' }}>
