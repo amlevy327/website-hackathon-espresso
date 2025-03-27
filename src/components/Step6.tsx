@@ -74,16 +74,26 @@ const Step6 = ({ mode, isCompleted, onComplete }: StepProps) => {
     if (hash) {
       console.log('Transaction Hash:', hash);
       setTxHash(hash);
+  
+      // ✅ NEW: complete the step immediately once tx is sent
+      if (mode === 'educational') {
+        console.log('Transaction sent (early complete)');
+        onComplete();
+        setPopupOpen(false);
+      }
     }
+  
+    // 🔁 KEEP: in case confirmation happens later
     if (mode === 'educational' && isConfirmed) {
       console.log('Transaction confirmed, completing step');
       onComplete();
       setPopupOpen(false);
     }
+  
     if (isError && error) {
       console.error('Transaction error:', error.message);
     }
-  }, [hash, isConfirmed, isError, error, mode, onComplete]);
+  }, [hash, isConfirmed, isError, error, mode, onComplete]);  
 
   const dynamicPopupText = () => {
     if (mode === 'educational') {

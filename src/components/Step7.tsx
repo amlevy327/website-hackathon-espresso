@@ -110,7 +110,7 @@ const Step7 = ({ mode, isCompleted, onComplete }: StepProps) => {
         return `Error checking NFT balance: ${balanceError.message}. Ensure you're on Sepolia (chainId 11155111) and the contract is deployed at ${CONTRACT_ADDRESS}.`;
       }
       if (hasNFT) return 'Success! Your NFT has landed on Ethereum Sepolia in mere seconds, powered by Espresso Confirmations. No 15-minute wait, no Ethereum Sepolia gas, just pure speed. Confirm your prize and celebrate the future of blockchain!';
-      return 'No NFT found on Sepolia for your address. Did the payment from Step 6 process correctly?';
+      return 'No NFT found on Sepolia for your address. Did the payment from Step 6 process correctly? If you did, please reload page and try step 7 again.';
     }
     return mode === 'game'
       ? 'Incoming transmission! Your Landing Permit has arrived on Planet Sepolia in just seconds, thanks to the Warp Tunnel’s power. No 15-minute delays here, this is the future of galactic travel. Claim your prize and bask in your Pioneer glory!'
