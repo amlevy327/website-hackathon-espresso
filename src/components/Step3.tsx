@@ -32,7 +32,7 @@ const Step3 = ({ mode, isCompleted, onComplete }: StepProps) => {
       ? 'You’ve landed on Planet Arbitrum! To continue travel, you’ll need Cosmic Credits. Stock up at the orbital station. Let’s power up!'
       : chainAdded
       ? '???'
-      : 'Verify you have sufficient balance on Arbitrum Sepolia (minimum 0.00001 ETH).';
+      : 'Verify you have sufficient balance on Arbitrum Sepolia (minimum 0.001 ETH).';
 
   const popupButtonText = mode === 'game' ? 'Collect Credits' : chainAdded ? 'Done' : 'Check Balance';
 
@@ -52,8 +52,8 @@ const Step3 = ({ mode, isCompleted, onComplete }: StepProps) => {
 
     if (balanceLoading) return;
 
-    if (!arbSepoliaBalance || Number(arbSepoliaBalance.value) < 10000000000000) {
-      alert('Insufficient ETH on Arbitrum Sepolia. You need at least 0.00001 ETH.');
+    if (!arbSepoliaBalance || Number(arbSepoliaBalance.value) < 1000000000000000) {
+      alert('Insufficient ETH on Arbitrum Sepolia. You need at least 0.001 ETH.');
       return;
     }
 
