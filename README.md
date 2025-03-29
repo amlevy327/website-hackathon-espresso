@@ -18,20 +18,21 @@ Players experience the pain of traditional bridging (15-min delay) and feel the 
 
 💡 Why It Matters
 
-Espresso is invisible until you feel it. Espresso Stellar makes that moment tangible through gameplay.
-Try by learning: Users don’t just read about Espresso. They use it.
+- Espresso is invisible until you feel it. Espresso Stellar makes that moment tangible through gameplay.
+- Try by learning: Users don’t just read about Espresso. They use it.
 
 🧩 Composable Highlights
-Payment on Arbitrum Sepolia Nitro Rollup (Rollup 327327327)
-Espresso-enabled relay listens for payments to a specific wallet to trigger NFT mint
-NFT mint on Ethereum Sepolia (chosen to view NFT on OpenSea)
+
+- Payment on Arbitrum Sepolia Nitro Rollup (Rollup 327327327)
+- Espresso-enabled relay listens for payments to a specific wallet to trigger NFT mint
+- NFT mint on Ethereum Sepolia (chosen to view NFT on OpenSea)
 
 🌌 Future Expansion
 
-Add new missions for each rollup that adopts Espresso
-Chain stats, leaderboards, and explorer tools
-Build awareness: “Which chains support Espresso?”
-Expand beyond NFTs to other app flows
+- Add new missions for each rollup that adopts Espresso
+- Chain stats, leaderboards, and explorer tools
+- Build awareness: “Which chains support Espresso?”
+- Expand beyond NFTs to other app flows
 
 🙋‍♂️ Created By
 
